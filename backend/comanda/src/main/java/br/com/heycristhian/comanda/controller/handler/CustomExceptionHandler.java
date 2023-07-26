@@ -8,6 +8,7 @@ import org.slf4j.MDC;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -50,6 +51,15 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(httpStatus).body(response);
     }
 
+    @ExceptionHandler(PropertyReferenceException.class)
+    public ResponseEntity<ExceptionResponse> handleException(PropertyReferenceException e) {
+        var httpStatus = HttpStatus.BAD_REQUEST;
+        var response = handleExceptionResponse(httpStatus, e.getLocalizedMessage());
+
+        log.error("BAD_REQUEST: {}", e.getLocalizedMessage());
+        return ResponseEntity.status(httpStatus).body(response);
+    }
+
     @ExceptionHandler(ObjectNotFoundException.class)
     public ResponseEntity<ExceptionResponse> handleObjectNotFoundException(ObjectNotFoundException e) {
         var httpStatus = HttpStatus.NOT_FOUND;
@@ -60,7 +70,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<ExceptionResponse> handleBadCredentialsException(RuntimeException e) {
+    public ResponseEntity<ExceptionResponse> handleBadCredentialsException(BadCredentialsException e) {
         var httpStatus = HttpStatus.FORBIDDEN;
         var response = handleExceptionResponse(httpStatus, e.getLocalizedMessage());
 

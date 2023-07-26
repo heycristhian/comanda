@@ -4,6 +4,7 @@ import br.com.heycristhian.comanda.controller.dto.request.LoginRequest;
 import br.com.heycristhian.comanda.controller.dto.response.AuthResponse;
 import br.com.heycristhian.comanda.domain.User;
 import br.com.heycristhian.comanda.security.HandleToken;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Tag(name = "AUTH", description = "Endpoint relacionado a autenticar na aplicação")
 @RequestMapping("/auth")
 public class AuthenticateController {
 

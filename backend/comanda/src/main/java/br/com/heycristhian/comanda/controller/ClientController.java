@@ -8,6 +8,8 @@ import br.com.heycristhian.comanda.usecase.client.DeleteClient;
 import br.com.heycristhian.comanda.usecase.client.SaveClient;
 import br.com.heycristhian.comanda.usecase.client.SearchClient;
 import br.com.heycristhian.comanda.usecase.client.UpdateClient;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -23,6 +25,8 @@ import static br.com.heycristhian.comanda.util.MessageUtil.*;
 
 @Slf4j
 @RestController
+@Tag(name = "CLIENTE", description = "Endpoints relacionado a manter cliente")
+@SecurityRequirement(name = "bearer-key")
 @RequestMapping("/api/v1/clients")
 public class ClientController {
 
