@@ -5,11 +5,14 @@ import br.com.heycristhian.comanda.controller.dto.response.FieldExceptionRespons
 import br.com.heycristhian.comanda.exception.ObjectNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -21,6 +24,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Slf4j
+@Order(Ordered.HIGHEST_PRECEDENCE)
 @RestControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -37,30 +41,30 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(status).body(response);
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ExceptionResponse> handleException(Exception e) {
-        var httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
-        var response = handleExceptionResponse(httpStatus, "Erro inesperado do sistema");
-
-        log.error("Internal Server Error: {}", e.getLocalizedMessage());
-        return ResponseEntity.status(httpStatus).body(response);
-    }
-
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ExceptionResponse> handleException(DataIntegrityViolationException e) {
         var httpStatus = HttpStatus.BAD_REQUEST;
         var response = handleExceptionResponse(httpStatus, handleDataIntegrityViolationExceptionMessage(e));
 
-        log.error("Bad Request: {}", e.getLocalizedMessage());
+        log.error("BAD_REQUEST: {}", e.getLocalizedMessage());
         return ResponseEntity.status(httpStatus).body(response);
     }
 
-    @ExceptionHandler({ObjectNotFoundException.class})
+    @ExceptionHandler(ObjectNotFoundException.class)
     public ResponseEntity<ExceptionResponse> handleObjectNotFoundException(ObjectNotFoundException e) {
         var httpStatus = HttpStatus.NOT_FOUND;
         var response = handleExceptionResponse(httpStatus, e.getLocalizedMessage());
 
-        log.error("Bad Request: {}", e.getLocalizedMessage());
+        log.error("NOT_FOUND: {}", e.getLocalizedMessage());
+        return ResponseEntity.status(httpStatus).body(response);
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<ExceptionResponse> handleBadCredentialsException(RuntimeException e) {
+        var httpStatus = HttpStatus.FORBIDDEN;
+        var response = handleExceptionResponse(httpStatus, e.getLocalizedMessage());
+
+        log.error("FORBIDDEN: {}", e.getLocalizedMessage());
         return ResponseEntity.status(httpStatus).body(response);
     }
 

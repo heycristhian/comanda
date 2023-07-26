@@ -3,6 +3,7 @@ package br.com.heycristhian.comanda.util;
 import br.com.heycristhian.comanda.controller.dto.request.ClientRequest;
 import br.com.heycristhian.comanda.controller.dto.response.ClientResponse;
 import br.com.heycristhian.comanda.domain.Client;
+import br.com.heycristhian.comanda.domain.User;
 
 public abstract class MessageUtil {
 
@@ -26,4 +27,7 @@ public abstract class MessageUtil {
     public static final String CLIENT_NAME_ENTITY = Client.class.getSimpleName();
     public static final String CLIENT_REQUEST_NAME_ENTITY = ClientRequest.class.getSimpleName();
     public static final String CLIENT_RESPONSE_NAME_ENTITY = ClientResponse.class.getSimpleName();
+
+    public static final String USER_NAME_ENTITY = User.class.getSimpleName();
+
 }

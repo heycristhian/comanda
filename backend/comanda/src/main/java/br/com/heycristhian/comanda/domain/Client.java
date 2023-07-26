@@ -6,6 +6,7 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -16,12 +17,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Data
 @SuperBuilder
 @ToString
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Client extends ComandaEntity {
-
-    public Client() {
-        super();
-    }
 
     @Column(name = "first_name")
     private String firstName;
