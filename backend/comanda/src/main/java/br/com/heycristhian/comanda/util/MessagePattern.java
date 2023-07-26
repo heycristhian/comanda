@@ -1,13 +1,15 @@
 package br.com.heycristhian.comanda.util;
 
 import br.com.heycristhian.comanda.controller.dto.request.ClientRequest;
+import br.com.heycristhian.comanda.controller.dto.request.UserRequest;
 import br.com.heycristhian.comanda.controller.dto.response.ClientResponse;
+import br.com.heycristhian.comanda.controller.dto.response.UserResponse;
 import br.com.heycristhian.comanda.domain.Client;
 import br.com.heycristhian.comanda.domain.User;
 
-public abstract class MessageUtil {
+public abstract class MessagePattern {
 
-    private MessageUtil() {
+    private MessagePattern() {
     }
 
     public static final String STARTING_SAVE_OBJECT_DATABASE = "Starting to save {} in database";
@@ -29,5 +31,7 @@ public abstract class MessageUtil {
     public static final String CLIENT_RESPONSE_NAME_ENTITY = ClientResponse.class.getSimpleName();
 
     public static final String USER_NAME_ENTITY = User.class.getSimpleName();
+    public static final String USER_RESPONSE_NAME_ENTITY = UserResponse.class.getSimpleName();
+    public static final String USER_REQUEST_NAME_ENTITY = UserRequest.class.getSimpleName();
 
 }

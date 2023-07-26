@@ -1,6 +1,11 @@
 package br.com.heycristhian.comanda.domain;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.PreUpdate;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -8,6 +13,8 @@ import org.springframework.data.annotation.CreatedDate;
 
 import java.io.Serializable;
 import java.time.Instant;
+
+import static br.com.heycristhian.comanda.util.SecurityUtil.getLoggedId;
 
 @SuperBuilder
 @Data
@@ -35,6 +42,6 @@ public abstract class ComandaEntity implements Serializable {
     @PreUpdate
     protected void onUpdate() {
         updatedAt = Instant.now();
-        userUpdatedId = 1L;
+        userUpdatedId = getLoggedId();
     }
 }

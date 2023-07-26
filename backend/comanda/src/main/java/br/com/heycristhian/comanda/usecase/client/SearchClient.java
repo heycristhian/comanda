@@ -8,8 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import static br.com.heycristhian.comanda.util.MessageUtil.CLIENT_NAME_ENTITY;
-import static br.com.heycristhian.comanda.util.MessageUtil.SEARCHING_OBJECT_DATABASE;
+import static br.com.heycristhian.comanda.util.MessagePattern.CLIENT_NAME_ENTITY;
+import static br.com.heycristhian.comanda.util.MessagePattern.SEARCHING_OBJECT_DATABASE;
 
 @Slf4j
 @Service

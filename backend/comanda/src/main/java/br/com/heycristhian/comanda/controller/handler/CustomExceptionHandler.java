@@ -3,6 +3,7 @@ package br.com.heycristhian.comanda.controller.handler;
 import br.com.heycristhian.comanda.controller.dto.response.ExceptionResponse;
 import br.com.heycristhian.comanda.controller.dto.response.FieldExceptionResponse;
 import br.com.heycristhian.comanda.exception.ObjectNotFoundException;
+import br.com.heycristhian.comanda.exception.PasswordException;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.core.Ordered;
@@ -22,7 +23,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.util.List;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import static br.com.heycristhian.comanda.util.RegexPattern.getMatcher;
 
 @Slf4j
 @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -44,15 +46,26 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ExceptionResponse> handleException(DataIntegrityViolationException e) {
-        var httpStatus = HttpStatus.BAD_REQUEST;
-        var response = handleExceptionResponse(httpStatus, handleDataIntegrityViolationExceptionMessage(e));
+        var matcher = getMatcherDuplicateEntry(e.getLocalizedMessage());
+        String errorMessage;
+        HttpStatus httpStatus;
 
-        log.error("BAD_REQUEST: {}", e.getLocalizedMessage());
+        if (matcher.find()) {
+            errorMessage = "Dado duplicado no campo: " + matcher.group(2);
+            httpStatus = HttpStatus.BAD_REQUEST;
+        } else {
+            errorMessage = "Os dados violam a integridade do banco de dados";
+            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+
+        var response = handleExceptionResponse(httpStatus, errorMessage);
+
+        log.error(HttpStatus.BAD_REQUEST + ": {}", e.getLocalizedMessage());
         return ResponseEntity.status(httpStatus).body(response);
     }
 
-    @ExceptionHandler(PropertyReferenceException.class)
-    public ResponseEntity<ExceptionResponse> handleException(PropertyReferenceException e) {
+    @ExceptionHandler({PropertyReferenceException.class, PasswordException.class})
+    public ResponseEntity<ExceptionResponse> handleException(RuntimeException e) {
         var httpStatus = HttpStatus.BAD_REQUEST;
         var response = handleExceptionResponse(httpStatus, e.getLocalizedMessage());
 
@@ -99,17 +112,9 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
                 .build();
     }
 
-    private String handleDataIntegrityViolationExceptionMessage(DataIntegrityViolationException e) {
+    private Matcher getMatcherDuplicateEntry(String message) {
         final String regex = "\\[Duplicate entry '(.*?)' for key ('.*?')]";
-
-        final Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);
-        final Matcher matcher = pattern.matcher(e.getLocalizedMessage());
-
-        if (matcher.find()) {
-            return "Dado duplicado no campo: " + matcher.group(2);
-        }
-
-        return "Os dados violam a integridade do banco de dados";
+        return getMatcher(regex, message);
     }
 
     private String getCorrelationId() {

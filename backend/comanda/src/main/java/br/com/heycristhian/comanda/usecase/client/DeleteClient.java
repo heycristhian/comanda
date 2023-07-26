@@ -4,7 +4,8 @@ import br.com.heycristhian.comanda.repository.ClientRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import static br.com.heycristhian.comanda.util.MessageUtil.*;
+import static br.com.heycristhian.comanda.util.MessagePattern.CLIENT_NAME_ENTITY;
+import static br.com.heycristhian.comanda.util.MessagePattern.DELETING_OBJECT_DATABASE;
 
 @Slf4j
 @Service

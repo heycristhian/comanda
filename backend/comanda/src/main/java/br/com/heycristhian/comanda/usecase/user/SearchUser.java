@@ -6,8 +6,8 @@ import br.com.heycristhian.comanda.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import static br.com.heycristhian.comanda.util.MessageUtil.SEARCHING_OBJECT_DATABASE;
-import static br.com.heycristhian.comanda.util.MessageUtil.USER_NAME_ENTITY;
+import static br.com.heycristhian.comanda.util.MessagePattern.SEARCHING_OBJECT_DATABASE;
+import static br.com.heycristhian.comanda.util.MessagePattern.USER_NAME_ENTITY;
 
 @Slf4j
 @Service
