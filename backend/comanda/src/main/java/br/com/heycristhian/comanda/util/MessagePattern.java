@@ -26,6 +26,8 @@ public abstract class MessagePattern {
 
     public static final String HTTP_RESPONSE = "Returning request response";
 
+    public static final String VALIDATING_PASSWORD = "Validating password";
+
     public static final String CLIENT_NAME_ENTITY = Client.class.getSimpleName();
     public static final String CLIENT_REQUEST_NAME_ENTITY = ClientRequest.class.getSimpleName();
     public static final String CLIENT_RESPONSE_NAME_ENTITY = ClientResponse.class.getSimpleName();

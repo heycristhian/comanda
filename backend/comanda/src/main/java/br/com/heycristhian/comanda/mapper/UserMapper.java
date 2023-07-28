@@ -18,4 +18,10 @@ public interface UserMapper {
 
     @Mapping(target = "password", expression = "java(encodePassword.execute(userRequest.password()))")
     User toUser(UserRequest userRequest, EncodePassword encodePassword);
+
+    default void toUser(UserRequest userRequest, User user, EncodePassword encodePassword) {
+        user.setUsername(userRequest.username());
+        user.setFullname(userRequest.fullname());
+        user.setPassword(encodePassword.execute(userRequest.password()));
+    }
 }
