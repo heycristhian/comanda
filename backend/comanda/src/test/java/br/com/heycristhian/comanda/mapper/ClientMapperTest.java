@@ -1,7 +1,7 @@
 package br.com.heycristhian.comanda.mapper;
 
-import br.com.heycristhian.comanda.mother.ClientMother;
-import br.com.heycristhian.comanda.mother.ClientRequestMother;
+import br.com.heycristhian.comanda.mother.client.ClientMother;
+import br.com.heycristhian.comanda.mother.client.ClientRequestMother;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

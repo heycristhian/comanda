@@ -60,7 +60,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
         var response = handleExceptionResponse(httpStatus, errorMessage);
 
-        log.error(HttpStatus.BAD_REQUEST + ": {}", e.getLocalizedMessage());
+        log.error(httpStatus + ": {}", e.getLocalizedMessage());
         return ResponseEntity.status(httpStatus).body(response);
     }
 

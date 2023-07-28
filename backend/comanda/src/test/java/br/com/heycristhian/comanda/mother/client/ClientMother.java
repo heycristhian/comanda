@@ -1,4 +1,4 @@
-package br.com.heycristhian.comanda.mother;
+package br.com.heycristhian.comanda.mother.client;
 
 import br.com.heycristhian.comanda.domain.Client;
 

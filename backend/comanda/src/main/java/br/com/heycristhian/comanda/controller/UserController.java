@@ -7,6 +7,7 @@ import br.com.heycristhian.comanda.usecase.user.SaveUser;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +34,7 @@ public class UserController {
     }
 
     @PostMapping
+    @Transactional
     public ResponseEntity<UserResponse> save(@RequestBody @Valid UserRequest userRequest, UriComponentsBuilder uriBuilder) {
         log.info(STARTING_SAVE_OBJECT_DATABASE, USER_NAME_ENTITY);
         var user = saveUser.execute(userRequest);
