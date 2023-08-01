@@ -1,18 +1,22 @@
 package br.com.heycristhian.comanda.validation.impl;
 
-import br.com.heycristhian.comanda.exception.PasswordException;
 import br.com.heycristhian.comanda.util.RegexPattern;
 import br.com.heycristhian.comanda.validation.ValidatePassword;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-
+@Slf4j
 @Component
-public class ValidateAtLeastOneUpperCaseLetter implements ValidatePassword {
+public class ValidateAtLeastOneUpperCaseLetter extends ValidatePassword {
 
     @Override
-    public void execute(String password) {
-        if (!RegexPattern.containsUpperCaseLetter(password)) {
-            throw new PasswordException("A senha deve ter pelo menos 1 letra maiúscula");
-        }
+    protected boolean validate(String password) {
+        log.info("Validating: ValidateAtLeastOneUpperCaseLetter");
+        return !RegexPattern.containsUpperCaseLetter(password);
+    }
+
+    @Override
+    protected String getErrorMessage() {
+        return "A senha deve ter pelo menos 1 letra maiúscula";
     }
 }
