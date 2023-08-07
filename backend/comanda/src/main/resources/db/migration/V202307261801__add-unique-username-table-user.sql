@@ -1,1 +1,1 @@
-alter table user add UNIQUE(username);
+alter table users add UNIQUE(username);

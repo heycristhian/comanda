@@ -1,7 +1,7 @@
 package br.com.heycristhian.comanda.usecase.user;
 
-import br.com.heycristhian.comanda.repository.UserRepository;
-import br.com.heycristhian.comanda.util.MessagePattern;
+import br.com.heycristhian.comanda.domain.repository.UserRepository;
+import br.com.heycristhian.comanda.usecase.util.MessagePattern;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

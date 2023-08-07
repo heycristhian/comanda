@@ -1,16 +1,13 @@
 package br.com.heycristhian.comanda.usecase.client;
 
-import br.com.heycristhian.comanda.controller.dto.request.ClientRequest;
-import br.com.heycristhian.comanda.domain.Client;
-import br.com.heycristhian.comanda.mapper.ClientMapper;
-import br.com.heycristhian.comanda.repository.ClientRepository;
+import br.com.heycristhian.comanda.domain.model.Client;
+import br.com.heycristhian.comanda.domain.repository.ClientRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import static br.com.heycristhian.comanda.util.MessagePattern.CLIENT_NAME_ENTITY;
-import static br.com.heycristhian.comanda.util.MessagePattern.CLIENT_REQUEST_NAME_ENTITY;
-import static br.com.heycristhian.comanda.util.MessagePattern.MAPPING_TO;
-import static br.com.heycristhian.comanda.util.MessagePattern.SAVING_OBJECT_DATABASE;
+import static br.com.heycristhian.comanda.usecase.util.MessagePattern.CLIENT_NAME_MODEL;
+import static br.com.heycristhian.comanda.usecase.util.MessagePattern.SAVING_OBJECT_DATABASE;
+import static br.com.heycristhian.comanda.infrastructure.util.SecurityUtil.getLoggedId;
 
 @Slf4j
 @Service
@@ -22,11 +19,10 @@ public class SaveClient {
         this.clientRepository = clientRepository;
     }
 
-    public Client execute(ClientRequest clientRequest) {
-        log.info(MAPPING_TO, CLIENT_REQUEST_NAME_ENTITY, CLIENT_NAME_ENTITY);
-        var client = ClientMapper.INSTANCE.toClient(clientRequest);
+    public Client execute(Client client) {
+        client.setUserCreatedId(getLoggedId());
 
-        log.info(SAVING_OBJECT_DATABASE, CLIENT_NAME_ENTITY);
+        log.info(SAVING_OBJECT_DATABASE, CLIENT_NAME_MODEL);
         return clientRepository.save(client);
     }
 }

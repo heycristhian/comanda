@@ -1,6 +1,6 @@
 package br.com.heycristhian.comanda.mother.user;
 
-import br.com.heycristhian.comanda.controller.dto.request.UserRequest;
+import br.com.heycristhian.comanda.infrastructure.http.dto.request.UserRequest;
 import org.junit.jupiter.params.provider.Arguments;
 
 import java.util.stream.Stream;

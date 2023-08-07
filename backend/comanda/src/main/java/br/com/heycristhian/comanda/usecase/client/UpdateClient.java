@@ -1,16 +1,13 @@
 package br.com.heycristhian.comanda.usecase.client;
 
-import br.com.heycristhian.comanda.controller.dto.request.ClientRequest;
-import br.com.heycristhian.comanda.domain.Client;
-import br.com.heycristhian.comanda.mapper.ClientMapper;
-import br.com.heycristhian.comanda.repository.ClientRepository;
+import br.com.heycristhian.comanda.domain.model.Client;
+import br.com.heycristhian.comanda.domain.repository.ClientRepository;
+import br.com.heycristhian.comanda.infrastructure.mapper.ClientMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import static br.com.heycristhian.comanda.util.MessagePattern.CLIENT_NAME_ENTITY;
-import static br.com.heycristhian.comanda.util.MessagePattern.CLIENT_REQUEST_NAME_ENTITY;
-import static br.com.heycristhian.comanda.util.MessagePattern.MAPPING_TO;
-import static br.com.heycristhian.comanda.util.MessagePattern.UPDATING_OBJECT_DATABASE;
+import static br.com.heycristhian.comanda.usecase.util.MessagePattern.CLIENT_NAME_MODEL;
+import static br.com.heycristhian.comanda.usecase.util.MessagePattern.UPDATING_OBJECT_DATABASE;
 
 @Slf4j
 @Service
@@ -18,19 +15,20 @@ public class UpdateClient {
 
     private final ClientRepository clientRepository;
     private final SearchClient searchClient;
+    private final ClientMapper clientMapper;
 
-    public UpdateClient(ClientRepository clientRepository, SearchClient searchClient) {
+    public UpdateClient(ClientRepository clientRepository, SearchClient searchClient, ClientMapper clientMapper) {
         this.clientRepository = clientRepository;
         this.searchClient = searchClient;
+        this.clientMapper = clientMapper;
     }
 
-    public Client execute(Long id, ClientRequest clientRequest) {
-        var client = searchClient.byId(id);
+    public Client execute(Long id, Client newClient) {
+        var currentClient = searchClient.byId(id);
 
-        log.info(MAPPING_TO, CLIENT_REQUEST_NAME_ENTITY, CLIENT_NAME_ENTITY);
-        ClientMapper.INSTANCE.toClient(client, clientRequest);
+        this.clientMapper.toClientReference(newClient, currentClient);
 
-        log.info(UPDATING_OBJECT_DATABASE, CLIENT_NAME_ENTITY);
-        return clientRepository.save(client);
+        log.info(UPDATING_OBJECT_DATABASE, CLIENT_NAME_MODEL);
+        return clientRepository.save(currentClient);
     }
 }

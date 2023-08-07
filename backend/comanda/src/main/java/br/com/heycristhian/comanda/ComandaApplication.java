@@ -139,6 +139,7 @@ public class ComandaApplication {
 //        try {
 //            String closeTableJson = objectMapper.writeValueAsString(closeTable);
 //            System.out.println("closeTableJson1: " + closeTableJson);
+
 //
 //        } catch (JsonProcessingException e) {
 //            throw new RuntimeException(e);

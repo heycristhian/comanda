@@ -1,6 +1,6 @@
 package br.com.heycristhian.comanda.mother.client;
 
-import br.com.heycristhian.comanda.controller.dto.request.ClientRequest;
+import br.com.heycristhian.comanda.infrastructure.http.dto.request.ClientRequest;
 
 public abstract class ClientRequestMother {
     public static ClientRequest getClientRequest() {

@@ -1,43 +1,35 @@
 package br.com.heycristhian.comanda.usecase.user;
 
-import br.com.heycristhian.comanda.controller.dto.request.UserRequest;
-import br.com.heycristhian.comanda.domain.User;
-import br.com.heycristhian.comanda.mapper.UserMapper;
-import br.com.heycristhian.comanda.repository.UserRepository;
-import br.com.heycristhian.comanda.usecase.password.EncodePassword;
-import br.com.heycristhian.comanda.validation.ValidatePassword;
+import br.com.heycristhian.comanda.domain.model.User;
+import br.com.heycristhian.comanda.domain.repository.UserRepository;
+import br.com.heycristhian.comanda.domain.validator.password.ValidatorPassword;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static br.com.heycristhian.comanda.util.MessagePattern.MAPPING_TO;
-import static br.com.heycristhian.comanda.util.MessagePattern.SAVING_OBJECT_DATABASE;
-import static br.com.heycristhian.comanda.util.MessagePattern.USER_NAME_ENTITY;
-import static br.com.heycristhian.comanda.util.MessagePattern.USER_REQUEST_NAME_ENTITY;
-import static br.com.heycristhian.comanda.util.MessagePattern.VALIDATING_PASSWORD;
-import static br.com.heycristhian.comanda.util.SecurityUtil.getLoggedId;
+import static br.com.heycristhian.comanda.usecase.util.MessagePattern.SAVING_OBJECT_DATABASE;
+import static br.com.heycristhian.comanda.usecase.util.MessagePattern.USER_NAME_ENTITY;
+import static br.com.heycristhian.comanda.usecase.util.MessagePattern.VALIDATING_PASSWORD;
+import static br.com.heycristhian.comanda.infrastructure.util.SecurityUtil.getLoggedId;
 
 @Slf4j
 @Service
 public class SaveUser {
 
     private final UserRepository userRepository;
-    private final List<ValidatePassword> validatesPassword;
-    private final EncodePassword encodePassword;
+    private final List<ValidatorPassword> validatesPassword;
 
-    public SaveUser(UserRepository userRepository, List<ValidatePassword> validatesPassword, EncodePassword encodePassword) {
+
+    public SaveUser(UserRepository userRepository, List<ValidatorPassword> validatesPassword) {
         this.userRepository = userRepository;
         this.validatesPassword = validatesPassword;
-        this.encodePassword = encodePassword;
     }
 
-    public User execute(UserRequest userRequest) {
+    public User execute(User user) {
         log.info(VALIDATING_PASSWORD);
-        validatesPassword.forEach(validatePassword -> validatePassword.execute(userRequest.password()));
+        validatesPassword.forEach(validatePassword -> validatePassword.execute(user.getPassword()));
 
-        log.info(MAPPING_TO, USER_REQUEST_NAME_ENTITY, USER_NAME_ENTITY);
-        var user = UserMapper.INSTANCE.toUser(userRequest, encodePassword);
         user.setUserCreatedId(getLoggedId());
 
         log.info(SAVING_OBJECT_DATABASE, USER_NAME_ENTITY);

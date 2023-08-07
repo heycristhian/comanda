@@ -1,4 +1,4 @@
-CREATE TABLE client(
+CREATE TABLE clients(
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_created_id INT NOT NULL,
     user_updated_id INT,
