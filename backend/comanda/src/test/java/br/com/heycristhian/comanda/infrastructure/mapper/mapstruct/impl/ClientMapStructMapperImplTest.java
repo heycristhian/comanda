@@ -1,4 +1,4 @@
-package br.com.heycristhian.comanda.mapper;
+package br.com.heycristhian.comanda.infrastructure.mapper.mapstruct.impl;
 
 import br.com.heycristhian.comanda.infrastructure.mapper.mapstruct.ClientMapStructMapperImpl;
 import br.com.heycristhian.comanda.mother.client.ClientMother;
@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class ClientSchemaMapperTest {
+class ClientMapStructMapperImplTest {
 
-    private ClientMapStructMapperImpl fixture;
+    private br.com.heycristhian.comanda.infrastructure.mapper.mapstruct.ClientMapStructMapperImpl fixture;
 
     @BeforeEach
     void setup() {

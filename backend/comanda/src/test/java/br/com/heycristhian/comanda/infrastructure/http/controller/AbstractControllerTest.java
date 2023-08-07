@@ -1,4 +1,4 @@
-package br.com.heycristhian.comanda.controller;
+package br.com.heycristhian.comanda.infrastructure.http.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;

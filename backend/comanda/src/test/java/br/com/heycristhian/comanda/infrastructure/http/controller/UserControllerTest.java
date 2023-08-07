@@ -1,4 +1,4 @@
-package br.com.heycristhian.comanda.controller;
+package br.com.heycristhian.comanda.infrastructure.http.controller;
 
 import br.com.heycristhian.comanda.domain.exception.PasswordException;
 import br.com.heycristhian.comanda.domain.model.User;
@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class UserSchemaControllerTest extends AbstractControllerTest {
+class UserControllerTest extends AbstractControllerTest {
 
     private final static String URL_PATH = "/api/v1/users";
 
