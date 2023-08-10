@@ -7,12 +7,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import static java.util.Objects.isNull;
 
-public abstract class SecurityUtil {
-
-    private SecurityUtil() {
-    }
-
-    public static Long getLoggedId() {
+public interface SecurityUtil {
+    static Long getLoggedId() {
         var user = getUser();
         var id = user.getId();
 
